@@ -1,3 +1,4 @@
+
 def call(String projectDir, String fileName, String tokenId, String apiServerId) {
     stage('Deploy to Kubernetes') {
         dir(projectDir) {
@@ -6,8 +7,8 @@ def call(String projectDir, String fileName, String tokenId, String apiServerId)
                 string(credentialsId: apiServerId, variable: 'APISERVER')
             ]) {
                 sh """
-                    kubectl --token="$TOKEN" \
-                            --server="$APISERVER" \
+                    kubectl --token=\$TOKEN \
+                            --server=\$APISERVER \
                             --insecure-skip-tls-verify=true \
                             apply -f ${fileName}
                 """
